@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Video</title>
+    <style>
+        /* Basic page styling */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Overlay styling */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        /* Video container */
+        #videoContainer {
+            width: 80%;
+            max-width: 800px;
+            height: 0;
+            padding-bottom: 45%;
+            position: relative;
+        }
+
+        /* YouTube iframe styling */
+        #videoContainer iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Trigger button -->
+    <button onclick="showOverlay()">Play Video</button>
+
+    <!-- Overlay with YouTube iframe -->
+    <div id="overlay" onclick="playVideo()">
+        <div id="videoContainer">
+            <iframe id="videoPlayer" src="https://www.youtube.com/embed/88Eynq2pEuc?enablejsapi=1" allow="autoplay"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Show overlay function
+        function showOverlay() {
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '1';
+            overlay.style.visibility = 'visible';
+        }
+
+        // Play video function
+        function playVideo() {
+            const iframe = document.getElementById('videoPlayer');
+            const player = new YT.Player(iframe, {
+                events: {
+                    'onReady': function(event) {
+                        event.target.playVideo();
+                    }
+                }
+            });
+        }
+    </script>
+
+    <!-- YouTube API script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
